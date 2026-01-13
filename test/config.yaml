@@ -38,6 +38,6 @@ applications:
         imagePattern: "private.azurecr.io/public-ecr-aws/docker/library/redis:{{version}}-alpine"
     actions:
       - type: "update-dockerfile"
-        image: "redis"
-        kustomizePath: "applications/argocd/kustomization.yaml"
-        tagPattern: "{{version}}-alpine"
+        targetFile: "images/private-azurecr-io/public-ecr-aws/docker/library/redis"
+        image: "private.azurecr.io/public-ecr-aws/docker/library/redis"
+        valuePattern: "v{{version}}"
