@@ -1,18 +1,19 @@
 import tempfile
 import unittest
 from pathlib import Path
+from test.utils import create_kustomization, read_file
+
 import yaml
 
 from lennybot.actions.update_image_tag import UpdateImageTagAction
 from lennybot.config.config import LennyBotActionConfig
-from test.utils import create_kustomization, read_file
 
 
 class TestUpdateImageTagAction(unittest.TestCase):
     def test_constructor_raises_without_kustomize_path(self):
         config = LennyBotActionConfig()
-        config._image = "node"
-        config._kustomize_path = None
+        setattr(config, "_image", "node")
+        setattr(config, "_kustomize_path", None)
         with self.assertRaises(Exception):
             UpdateImageTagAction("app", "1.0", "2.0", config)
 
@@ -22,9 +23,9 @@ class TestUpdateImageTagAction(unittest.TestCase):
             create_kustomization(kustomize_file, [{"name": "node", "newTag": "old"}, {"name": "other", "newTag": "x"}])
 
             config = LennyBotActionConfig()
-            config._image = "node"
-            config._kustomize_path = str(kustomize_file)
-            config._tag_pattern = "v{{version}}"
+            setattr(config, "_image", "node")
+            setattr(config, "_kustomize_path", str(kustomize_file))
+            setattr(config, "_tag_pattern", "v{{version}}")
 
             action = UpdateImageTagAction("app", "1.0", "3.2.1", config)
             action.run()
@@ -39,8 +40,8 @@ class TestUpdateImageTagAction(unittest.TestCase):
             create_kustomization(kustomize_file, [{"name": "other", "newTag": "x"}])
 
             config = LennyBotActionConfig()
-            config._image = "node"
-            config._kustomize_path = str(kustomize_file)
+            setattr(config, "_image", "node")
+            setattr(config, "_kustomize_path", str(kustomize_file))
 
             action = UpdateImageTagAction("app", "1.0", "3.2.1", config)
             with self.assertRaises(Exception):

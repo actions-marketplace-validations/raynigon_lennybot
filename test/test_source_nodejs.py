@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 from lennybot.config.config import LennyBotSourceConfig
 from lennybot.service.source.source_nodejs import NodeJSVersionSource
